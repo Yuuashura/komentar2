@@ -1,16 +1,10 @@
 {
   "version": 2,
   "builds": [
-    {
-      "src": "api/komentar.js",
-      "use": "@vercel/node"
-    }
+    { "src": "api/komentar.js", "use": "@vercel/node" }
   ],
   "routes": [
-    {
-      "src": "/api/komentar",
-      "methods": ["GET", "POST", "DELETE", "OPTIONS"],
-      "dest": "/api/komentar.js"
-    }
+    { "src": "/api/komentar", "methods": ["GET", "POST", "DELETE", "OPTIONS"], "dest": "/api/komentar.js" },
+    { "src": "/", "dest": "/index.html" }
   ]
 }
