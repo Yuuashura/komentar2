@@ -1,4 +1,11 @@
-let komentarList = [];
+let komentarList = [
+  {
+    id: "Yuuashura",
+    nama: "ADMIN YUU ASHURA",
+    email: "GAUSAH TAU",
+    komentar: "-- JADILAH ANAK BAIK --"
+  }
+];
 
 
 export default function handler(req, res) {
@@ -27,7 +34,7 @@ export default function handler(req, res) {
 
 
     const newKomentar = {
-      id: Date.now().toString(),
+      id: komentarList.length + 1,
       nama,
       email,
       komentar,
