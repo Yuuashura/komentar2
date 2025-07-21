@@ -1,9 +1,9 @@
 let komentarList = [
   {
-    id: "Yuuashura",
-    nama: "ADMIN YUU ASHURA",
-    email: "GAUSAH TAU",
-    komentar: "-- JADILAH ANAK BAIK --"
+    nama: "Yuuashura",
+    sayaSiapa: "ADMIN YUU ASHURA",
+    instagram: "@yudis.ashura",
+    pesan: "-- JADILAH ANAK BAIK --"
   }
 ];
 
