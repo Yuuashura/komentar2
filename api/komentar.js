@@ -1,11 +1,4 @@
-let komentarList = [
-  {
-    nama: "Yuuashura",
-    sayaSiapa: "ADMIN YUU ASHURA",
-    instagram: "@yudis.ashura",
-    pesan: "-- JADILAH ANAK BAIK --"
-  }
-];
+let komentarList = [];
 
 
 export default function handler(req, res) {
