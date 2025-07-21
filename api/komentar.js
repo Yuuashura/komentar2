@@ -1,6 +1,5 @@
 let komentarList = [];
 
-
 export default function handler(req, res) {
   // ✅ CORS headers
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -25,9 +24,8 @@ export default function handler(req, res) {
       return res.status(400).json({ message: 'Semua field wajib diisi.' });
     }
 
-
     const newKomentar = {
-      id: komentarList.length + 1,
+      id: Date.now().toString(),
       nama,
       email,
       komentar,

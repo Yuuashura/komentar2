@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        text-align: center;
+      }
+
+      .items{
+        background-color: blueviolet;
+      }
+    </style>
+  </head>
+  <body>
+
+    <header class="head">
+
+    </header>
+
+    <div class="dataKosong" id="kosong">
+
+      <div class="dataKedua">
+        <h1>ITEM INI MASIH KOSONG</h1>  
+        <!-- ITEMS KOSONG -->
+      </div>
+
+      <div class="items">
+        <h1 class="title"> ini judul
+        </h1>
+      </div>
+
+
+      <!-- DISINI ITEMS BARU  -->
+
+
+    </div>
+  </body>
+
+  <script>
+    // membuat variabel
+    const containerKosong = document.getElementById("kosong");
+    const containerKedua = document.querySelector(".dataKedua");
+
+    
+    for (let i = 0; i < 10; i++) {
+      
+      // //membuat element baru
+      const itemBaru = document.createElement("div");
+      const judul = document.createElement("h1");
+      // //  membuat class untuk element
+      itemBaru.classList.add("items");
+      judul.classList.add("title");
+      
+      // // mengisi konten kedalam element
+      judul.textContent = `Ini adalah judul Ke - ${i}`;
+      
+      console.log(`Perulangan Pertama ${i}`)
+
+      // // menambahkan element yang sudah dibuat ke dalam element html 
+        containerKosong.appendChild(itemBaru);
+        itemBaru.appendChild(judul);
+    }
+  </script>
+</html>
