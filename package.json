@@ -1,13 +1,9 @@
 {
-  "name": "comment-api-vercel",
+  "name": "komentar-api",
   "version": "1.0.0",
+  "main": "api/komentar.js",
   "scripts": {
-    "dev": "vercel dev",
-    "build": "echo 'No build step required'",
-    "start": "vercel dev"
+    "start": "node api/komentar.js"
   },
-  "dependencies": {},
-  "devDependencies": {
-    "vercel": "^28.16.0"
-  }
+  "dependencies": {}
 }
