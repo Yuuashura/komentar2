@@ -1,361 +1,157 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Komentar</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form Komentar</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9f9;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
+    .container {
+      width: 100%;
+      max-width: 500px;
+      background-color: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
 
-        .card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            backdrop-filter: blur(10px);
-        }
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #333;
+    }
 
-        h1, h2 {
-            color: #333;
-            margin-bottom: 20px;
-            text-align: center;
-        }
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+    input, textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #555;
-        }
+    input:focus, textarea:focus {
+      border-color: #007bff;
+      outline: none;
+    }
 
-        input, textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s ease;
-        }
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #007bff;
+      color: white;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
 
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
+    button:hover {
+      background-color: #0056b3;
+    }
 
-        textarea {
-            height: 100px;
-            resize: vertical;
-        }
+    .success-message {
+      margin-top: 1rem;
+      color: green;
+      font-weight: 500;
+      text-align: center;
+    }
 
-        .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn:active {
-            transform: translateY(0);
-        }
-
-        .alert {
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-weight: 500;
-        }
-
-        .alert-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .alert-error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .comment {
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 15px;
-            transition: transform 0.2s ease;
-        }
-
-        .comment:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .comment-header {
-            display: flex;
-            justify-content: between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .comment-author {
-            font-weight: 600;
-            color: #667eea;
-            margin-right: 15px;
-        }
-
-        .comment-date {
-            color: #6c757d;
-            font-size: 14px;
-            margin-left: auto;
-        }
-
-        .comment-content {
-            margin-bottom: 10px;
-            line-height: 1.6;
-        }
-
-        .comment-email {
-            color: #6c757d;
-            font-size: 14px;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 20px;
-            color: #6c757d;
-        }
-
-        .no-comments {
-            text-align: center;
-            padding: 40px;
-            color: #6c757d;
-            font-style: italic;
-        }
-
-        .comments-count {
-            background: #667eea;
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            margin-left: 10px;
-        }
-
-        .admin-link {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .admin-link a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
-            padding: 10px 20px;
-            border: 2px solid #667eea;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .admin-link a:hover {
-            background: #667eea;
-            color: white;
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 0 10px;
-            }
-            
-            .card {
-                padding: 20px;
-            }
-        }
-    </style>
+    .error-message {
+      margin-top: 1rem;
+      color: red;
+      font-weight: 500;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Form Komentar -->
-        <div class="card">
-            <h1>💬 Tulis Komentar</h1>
-            <div id="alert-container"></div>
-            
-            <form id="commentForm">
-                <div class="form-group">
-                    <label for="nama">Nama:</label>
-                    <input type="text" id="nama" name="nama" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="komentar">Komentar:</label>
-                    <textarea id="komentar" name="komentar" required placeholder="Tulis komentar Anda di sini..."></textarea>
-                </div>
-                
-                <button type="submit" class="btn">Kirim Komentar</button>
-            </form>
-        </div>
 
-        <!-- Daftar Komentar -->
-        <div class="card">
-            <h2>
-                📝 Semua Komentar 
-                <span id="comments-count" class="comments-count">0</span>
-            </h2>
-            <div id="comments-container">
-                <div class="loading">Memuat komentar...</div>
-            </div>
-        </div>
+  <div class="container">
+    <h1>Kirim Komentar</h1>
+    <form id="komentarForm">
+      <label for="nama">Nama</label>
+      <input type="text" id="nama" required />
 
-        <!-- Link ke Admin -->
-        <div class="admin-link">
-            <a href="admin.html">🔧 Panel Admin (Kelola Komentar)</a>
-        </div>
-    </div>
+      <label for="email">Email</label>
+      <input type="email" id="email" required />
 
-    <script>
-        const API_BASE = window.location.origin;
-        
-        // Function untuk menampilkan alert
-        function showAlert(message, type = 'success') {
-            const alertContainer = document.getElementById('alert-container');
-            alertContainer.innerHTML = `
-                <div class="alert alert-${type}">
-                    ${message}
-                </div>
-            `;
-            
-            setTimeout(() => {
-                alertContainer.innerHTML = '';
-            }, 5000);
-        }
+      <label for="komentar">Komentar</label>
+      <textarea id="komentar" rows="5" required></textarea>
 
-        // Function untuk format tanggal
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('id-ID', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-        }
+      <button type="submit">Kirim</button>
+    </form>
 
-        // Function untuk load semua komentar
-        async function loadComments() {
-            try {
-                const response = await fetch(`${API_BASE}/api/comments`);
-                const result = await response.json();
-                
-                const container = document.getElementById('comments-container');
-                const countElement = document.getElementById('comments-count');
-                
-                if (result.success && result.data.length > 0) {
-                    countElement.textContent = result.total;
-                    
-                    container.innerHTML = result.data.map(comment => `
-                        <div class="comment">
-                            <div class="comment-header">
-                                <span class="comment-author">${comment.nama}</span>
-                                <span class="comment-date">${formatDate(comment.tanggal)}</span>
-                            </div>
-                            <div class="comment-content">${comment.komentar}</div>
-                            <div class="comment-email">📧 ${comment.email}</div>
-                        </div>
-                    `).join('');
-                } else {
-                    countElement.textContent = '0';
-                    container.innerHTML = `
-                        <div class="no-comments">
-                            Belum ada komentar. Jadilah yang pertama untuk berkomentar! 🌟
-                        </div>
-                    `;
-                }
-            } catch (error) {
-                console.error('Error loading comments:', error);
-                document.getElementById('comments-container').innerHTML = `
-                    <div class="alert alert-error">
-                        Gagal memuat komentar. Silakan refresh halaman.
-                    </div>
-                `;
-            }
-        }
+    <div id="message"></div>
+  </div>
 
-        // Handle form submission
-        document.getElementById('commentForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const formData = new FormData(e.target);
-            const commentData = {
-                nama: formData.get('nama'),
-                email: formData.get('email'),
-                komentar: formData.get('komentar')
-            };
-            
-            try {
-                const response = await fetch(`${API_BASE}/api/comments`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(commentData)
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    showAlert('✅ Komentar berhasil ditambahkan!', 'success');
-                    e.target.reset(); // Reset form
-                    loadComments(); // Reload comments
-                } else {
-                    showAlert(`❌ ${result.message}`, 'error');
-                }
-            } catch (error) {
-                console.error('Error submitting comment:', error);
-                showAlert('❌ Terjadi kesalahan saat mengirim komentar', 'error');
-            }
+  <script>
+    const form = document.getElementById("komentarForm");
+    const messageBox = document.getElementById("message");
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const data = {
+        nama: document.getElementById("nama").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        komentar: document.getElementById("komentar").value.trim()
+      };
+
+      // Reset pesan
+      messageBox.textContent = "";
+      messageBox.className = "";
+
+      try {
+        const res = await fetch("https://komentar2.vercel.app/api/komentar", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
         });
 
-        // Load comments saat halaman dimuat
-        document.addEventListener('DOMContentLoaded', loadComments);
-    </script>
+        const result = await res.json();
+
+        if (res.ok) {
+          messageBox.textContent = "Komentar berhasil dikirim!";
+          messageBox.className = "success-message";
+          form.reset();
+        } else {
+          messageBox.textContent = result.message || "Gagal mengirim komentar.";
+          messageBox.className = "error-message";
+        }
+
+      } catch (error) {
+        messageBox.textContent = "Terjadi kesalahan koneksi.";
+        messageBox.className = "error-message";
+        console.error("Error:", error);
+      }
+    });
+  </script>
+
 </body>
 </html>

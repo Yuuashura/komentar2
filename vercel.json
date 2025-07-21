@@ -9,12 +9,7 @@
   "routes": [
     {
       "src": "/api/komentar",
-      "methods": ["GET", "POST"],
-      "dest": "/api/komentar.js"
-    },
-    {
-      "src": "/api/komentar",
-      "methods": ["DELETE"],
+      "methods": ["GET", "POST", "DELETE", "OPTIONS"],
       "dest": "/api/komentar.js"
     }
   ]
