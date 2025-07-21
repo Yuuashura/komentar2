@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form Komentar</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background: #f4f4f4;
+    }
+    h1 {
+      color: #333;
+    }
+    form {
+      background: #fff;
+      padding: 1rem;
+      border-radius: 10px;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, textarea {
+      width: 100%;
+      padding: 0.5rem;
+      margin: 0.5rem 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .komentar {
+      background: #fff;
+      padding: 1rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .hapus {
+      background: red;
+      color: white;
+      border: none;
+      padding: 0.3rem 0.5rem;
+      border-radius: 4px;
+      float: right;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Form Komentar</h1>
+
+  <form id="komentarForm">
+    <input type="text" id="nama" placeholder="Nama" required />
+    <input type="email" id="email" placeholder="Email" required />
+    <textarea id="komentar" placeholder="Komentar" required></textarea>
+    <button type="submit">Kirim</button>
+  </form>
+
+  <h2>Daftar Komentar</h2>
+  <div id="daftarKomentar"></div>
+
+  <script>
+    const apiUrl = "https://komentar2.vercel.app/api/komentar";
+
+    const form = document.getElementById("komentarForm");
+    const daftar = document.getElementById("daftarKomentar");
+
+    async function ambilKomentar() {
+      const res = await fetch(apiUrl);
+      const data = await res.json();
+      tampilkanKomentar(data);
+    }
+
+    function tampilkanKomentar(data) {
+      daftar.innerHTML = "";
+      data.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "komentar";
+        div.innerHTML = `
+          <strong>${item.nama}</strong> (${item.email})<br/>
+          <p>${item.komentar}</p>
+          <button class="hapus" onclick="hapusKomentar('${item.id}')">Hapus</button>
+        `;
+        daftar.appendChild(div);
+      });
+    }
+
+    async function hapusKomentar(id) {
+      if (confirm("Yakin ingin menghapus komentar ini?")) {
+        await fetch(`${apiUrl}?id=${id}`, { method: "DELETE" });
+        ambilKomentar();
+      }
+    }
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const data = {
+        nama: document.getElementById("nama").value,
+        email: document.getElementById("email").value,
+        komentar: document.getElementById("komentar").value
+      };
+
+      const res = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      if (res.ok) {
+        form.reset();
+        ambilKomentar();
+      } else {
+        alert("Gagal mengirim komentar.");
+      }
+    });
+
+    // Ambil komentar saat halaman pertama kali dibuka
+    ambilKomentar();
+  </script>
+
+</body>
+</html>

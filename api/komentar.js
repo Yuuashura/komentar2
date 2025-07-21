@@ -15,7 +15,7 @@ export default function handler(req, res) {
     }
 
     const newKomentar = {
-      id: Date.now().toString(),
+      id: komentarList.length + 1,
       nama,
       email,
       komentar,
