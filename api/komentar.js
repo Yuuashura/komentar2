@@ -1,4 +1,11 @@
 let komentarList = [];
+const path = require('path');
+const app = express();
+app.use(express.static('public'));
+// Serve HTML file
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 export default function handler(req, res) {
   // ✅ CORS headers
@@ -23,6 +30,7 @@ export default function handler(req, res) {
     if (!nama || !email || !komentar) {
       return res.status(400).json({ message: 'Semua field wajib diisi.' });
     }
+
 
     const newKomentar = {
       id: Date.now().toString(),

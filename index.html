@@ -3,104 +3,141 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Form Komentar</title>
+  <title>Komentar API</title>
   <style>
     body {
       font-family: Arial, sans-serif;
+      background: #f9f9f9;
       padding: 2rem;
-      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
     }
-    h1 {
-      color: #333;
-    }
-    form {
-      background: #fff;
-      padding: 1rem;
+
+    .container {
+      max-width: 600px;
+      width: 100%;
+      background: white;
+      padding: 2rem;
       border-radius: 10px;
-      margin-bottom: 2rem;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    form {
+      margin-bottom: 2rem;
+    }
+
     input, textarea {
       width: 100%;
-      padding: 0.5rem;
-      margin: 0.5rem 0;
-      border-radius: 5px;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
       border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
     }
+
     button {
-      padding: 0.5rem 1rem;
-      background: #007bff;
-      color: white;
+      padding: 0.75rem 1.5rem;
+      background-color: #007bff;
       border: none;
-      border-radius: 5px;
+      color: white;
+      font-size: 1rem;
+      border-radius: 6px;
       cursor: pointer;
     }
-    .komentar {
-      background: #fff;
-      padding: 1rem;
-      border-radius: 10px;
-      margin-bottom: 1rem;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+
+    button:hover {
+      background-color: #0056b3;
     }
+
+    .komentar {
+      border: 1px solid #ddd;
+      padding: 1rem;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
     .hapus {
+      position: absolute;
+      top: 10px;
+      right: 10px;
       background: red;
       color: white;
       border: none;
-      padding: 0.3rem 0.5rem;
       border-radius: 4px;
-      float: right;
+      padding: 0.3rem 0.5rem;
       cursor: pointer;
+    }
+
+    .success, .error {
+      text-align: center;
+      margin-bottom: 1rem;
+      font-weight: bold;
+    }
+
+    .success {
+      color: green;
+    }
+
+    .error {
+      color: red;
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <h1>Komentar</h1>
 
-  <h1>Form Komentar</h1>
+    <form id="formKomentar">
+      <input type="text" id="nama" placeholder="Nama" required />
+      <input type="email" id="email" placeholder="Email" required />
+      <textarea id="komentar" placeholder="Tulis komentar..." required></textarea>
+      <button type="submit">Kirim Komentar</button>
+    </form>
 
-  <form id="komentarForm">
-    <input type="text" id="nama" placeholder="Nama" required />
-    <input type="email" id="email" placeholder="Email" required />
-    <textarea id="komentar" placeholder="Komentar" required></textarea>
-    <button type="submit">Kirim</button>
-  </form>
-
-  <h2>Daftar Komentar</h2>
-  <div id="daftarKomentar"></div>
+    <div id="pesan"></div>
+    <div id="daftarKomentar"></div>
+  </div>
 
   <script>
-    const apiUrl = "https://komentar2.vercel.app/api/komentar";
+    const API_URL = "https://komentar2.vercel.app/api/komentar";
+    const form = document.getElementById("formKomentar");
+    const daftarKomentar = document.getElementById("daftarKomentar");
+    const pesan = document.getElementById("pesan");
 
-    const form = document.getElementById("komentarForm");
-    const daftar = document.getElementById("daftarKomentar");
-
+    // GET komentar
     async function ambilKomentar() {
-      const res = await fetch(apiUrl);
-      const data = await res.json();
-      tampilkanKomentar(data);
-    }
-
-    function tampilkanKomentar(data) {
-      daftar.innerHTML = "";
-      data.forEach(item => {
-        const div = document.createElement("div");
-        div.className = "komentar";
-        div.innerHTML = `
-          <strong>${item.nama}</strong> (${item.email})<br/>
-          <p>${item.komentar}</p>
-          <button class="hapus" onclick="hapusKomentar('${item.id}')">Hapus</button>
-        `;
-        daftar.appendChild(div);
-      });
-    }
-
-    async function hapusKomentar(id) {
-      if (confirm("Yakin ingin menghapus komentar ini?")) {
-        await fetch(`${apiUrl}?id=${id}`, { method: "DELETE" });
-        ambilKomentar();
+      try {
+        const res = await fetch(API_URL);
+        const data = await res.json();
+        tampilkanKomentar(data);
+      } catch (err) {
+        pesan.innerHTML = "<p class='error'>Gagal mengambil komentar.</p>";
       }
     }
 
-    form.addEventListener("submit", async function (e) {
+    // Tampilkan komentar
+    function tampilkanKomentar(data) {
+      daftarKomentar.innerHTML = "";
+      data.forEach(k => {
+        const div = document.createElement("div");
+        div.className = "komentar";
+        div.innerHTML = `
+          <strong>${k.nama}</strong> <small>(${k.email})</small>
+          <p>${k.komentar}</p>
+          <button class="hapus" onclick="hapusKomentar('${k.id}')">Hapus</button>
+        `;
+        daftarKomentar.appendChild(div);
+      });
+    }
+
+    // POST komentar baru
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const data = {
         nama: document.getElementById("nama").value,
@@ -108,23 +145,44 @@
         komentar: document.getElementById("komentar").value
       };
 
-      const res = await fetch(apiUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
+      try {
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
 
-      if (res.ok) {
+        if (!res.ok) {
+          throw new Error("Gagal mengirim komentar.");
+        }
+
+        const result = await res.json();
+        pesan.innerHTML = "<p class='success'>Komentar berhasil dikirim!</p>";
         form.reset();
         ambilKomentar();
-      } else {
-        alert("Gagal mengirim komentar.");
+
+      } catch (err) {
+        pesan.innerHTML = "<p class='error'>Gagal mengirim komentar.</p>";
       }
     });
 
-    // Ambil komentar saat halaman pertama kali dibuka
+    // DELETE komentar
+    async function hapusKomentar(id) {
+      if (!confirm("Yakin ingin menghapus komentar ini?")) return;
+
+      try {
+        const res = await fetch(`${API_URL}?id=${id}`,
+        { method: "DELETE" });
+        
+        if (!res.ok) throw new Error("Gagal menghapus");
+        ambilKomentar();
+      } catch (err) {
+        alert("Terjadi kesalahan saat menghapus komentar.");
+      }
+    }
+
+    // Ambil komentar saat pertama kali dibuka
     ambilKomentar();
   </script>
-
 </body>
 </html>
