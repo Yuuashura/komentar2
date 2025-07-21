@@ -5,6 +5,6 @@
   ],
   "routes": [
     { "src": "/api/komentar", "methods": ["GET", "POST", "DELETE", "OPTIONS"], "dest": "/api/komentar.js" },
-    { "src": "/", "dest": "/index.html" }
+    { "src": "/", "dest": "/public/index.html" }
   ]
 }
