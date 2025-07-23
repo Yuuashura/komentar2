@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Impor dan gunakan rute API komentar Anda
 const commentsRouter = require('./routes/comments');
-app.use('/api/comments', commentsRouter);
+app.use('/api/komentar', commentsRouter);
 
 // Catch-all untuk frontend (jika Anda menggunakan single-page application)
 app.get('*', (req, res) => {
