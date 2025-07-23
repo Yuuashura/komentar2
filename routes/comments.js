@@ -1,7 +1,10 @@
 // routes/comments.js
 const express = require('express');
+const cors = require('cors');
 const router = express.Router();
 const db = require('../lib/db'); // Impor logika database
+
+app.use(cors());
 
 // GET /api/comments - Mendapatkan semua komentar
 router.get('/', (req, res) => {

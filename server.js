@@ -1,10 +1,13 @@
 const express = require('express');
 const path = require('path'); // <-- Modul 'path' diperlukan
+const cors = require('cors');
 const app = express();
 const port = 3000;
 
 // Middleware untuk mengizinkan server menerima body JSON
 app.use(express.json());
+app.use(cors());
+
 
 // --- PERUBAHAN UTAMA DIMULAI DI SINI ---
 
