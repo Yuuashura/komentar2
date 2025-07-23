@@ -173,7 +173,7 @@
       if (!confirm("Yakin ingin menghapus komentar ini?")) return;
 
       try {
-        const res = await fetch(`${API_URL}?id=${id}`,
+        const res = await fetch(`${API_URL}/{id}`,
         { method: "DELETE" });
         
         if (!res.ok) throw new Error("Gagal menghapus");
