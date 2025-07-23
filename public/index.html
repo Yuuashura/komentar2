@@ -95,7 +95,6 @@
 
     <form id="formKomentar">
       <input type="text" id="nama" placeholder="Nama" required />
-      <input type="email" id="email" placeholder="Email" required />
       <textarea id="komentar" placeholder="Tulis komentar..." required></textarea>
       <button type="submit">Kirim Komentar</button>
     </form>
@@ -129,7 +128,7 @@
         const div = document.createElement("div");
         div.className = "komentar";
         div.innerHTML = `
-          <strong>${k.nama}</strong> <small>(${k.email})</small>
+          <strong>RAJA IBLIS</strong> <small>(${k.email})</small>
           <p>${k.komentar}</p>
           <button class="hapus" onclick="hapusKomentar('${k.id}')">Hapus</button>
         `;
@@ -141,8 +140,7 @@
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const data = {
-        nama: document.getElementById("nama").value,
-        email: document.getElementById("email").value,
+        email: document.getElementById("nama").value,
         komentar: document.getElementById("komentar").value
       };
 
@@ -172,9 +170,10 @@
     // DELETE komentar
     async function hapusKomentar(id) {
       if (!confirm("Yakin ingin menghapus komentar ini?")) return;
-
+      console.log(id);
+      
       try {
-        const res = await fetch(`${API_URL}/id`,
+        const res = await fetch(`${API_URL}/${id}`,
         { method: "DELETE" });
         
         if (!res.ok) throw new Error("Gagal menghapus");
