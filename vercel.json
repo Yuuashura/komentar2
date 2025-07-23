@@ -15,24 +15,5 @@
       "src": "/(.*)",
       "dest": "/public/$1"
     }
-  ],
-  "headers": [
-    {
-      "source": "/routes/(.*)",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "https://projekan-html.vercel.app"
-        },
-        {
-          "key": "Access-Control-Allow-Methods",
-          "value": "GET, POST, DELETE, OPTIONS"
-        },
-        {
-          "key": "Access-Control-Allow-Headers",
-          "value": "Content-Type, Authorization"
-        }
-      ]
-    }
   ]
 }
