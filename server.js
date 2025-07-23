@@ -32,7 +32,5 @@ app.use('/api/komentar', commentsRouter);
 
 
 // Menyalakan server
-app.listen(port, () => {
-  console.log(`Server berjalan di http://localhost:${port}`);
-  console.log("Halaman utama sekarang menyajikan index.html dari folder 'public'.");
-});
+// ... your app setup ...
+module.exports = app; // Export the app instance
