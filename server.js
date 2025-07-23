@@ -32,7 +32,7 @@ app.use('/api/comments', commentsRouter);
 
 // Catch-all untuk frontend (jika Anda menggunakan single-page application)
 app.get('*', (req, res) => {
-    if (!req.originalUrl.startsWith('/')) {
+    if (!req.originalUrl.startsWith('/api')) {
         res.sendFile(path.join(__dirname, 'public', 'index.html'));
     }
 });

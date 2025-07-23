@@ -1,12 +1,18 @@
 {
-  "name": "api-komentar",
+  "name": "api-komentar-server",
   "version": "1.0.0",
-  "description": "API sederhana untuk CRUD komentar",
+  "description": "API untuk sistem komentar",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
+  "author": "Yuuashura",
+  "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.19.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
