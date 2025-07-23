@@ -115,6 +115,7 @@
       try {
         const res = await fetch(API_URL);
         const data = await res.json();
+        console.log(data);
         tampilkanKomentar(data);
       } catch (err) {
         pesan.innerHTML = "<p class='error'>Gagal mengambil komentar.</p>";
@@ -173,7 +174,7 @@
       if (!confirm("Yakin ingin menghapus komentar ini?")) return;
 
       try {
-        const res = await fetch(`${API_URL}/{id}`,
+        const res = await fetch(`${API_URL}/id`,
         { method: "DELETE" });
         
         if (!res.ok) throw new Error("Gagal menghapus");
