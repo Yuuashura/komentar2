@@ -145,6 +145,8 @@
         komentar: document.getElementById("komentar").value
       };
 
+      console.log(data);
+
       try {
         const res = await fetch(API_URL, {
           method: "POST",

@@ -18,15 +18,14 @@ export default function handler(req, res) {
 
   // ✅ POST komentar baru
   if (req.method === 'POST') {
-    const { nama, email, komentar } = req.body;
+    const {email, komentar } = req.body;
 
-    if (!nama || !email || !komentar) {
+    if (!email || !komentar) {
       return res.status(400).json({ message: 'Semua field wajib diisi.' });
     }
 
     const newKomentar = {
       id: Date.now().toString(),
-      nama,
       email,
       komentar,
     };
