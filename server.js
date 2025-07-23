@@ -20,7 +20,7 @@ const corsOptions = {
 };
 
 // --- 3. Terapkan Middleware ---
-app.use(cors(corsOptions)); // Terapkan konfigurasi CORS
+app.use(cors()); // Terapkan konfigurasi CORS
 app.use(express.json());   // Middleware untuk membaca body JSON
 
 // --- Rute Anda ---
