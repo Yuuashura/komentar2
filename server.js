@@ -1,36 +1,41 @@
 const express = require('express');
-const path = require('path'); // <-- Modul 'path' diperlukan
+const cors = require('cors'); // <-- 1. Impor library cors
+const path = require('path');
 const app = express();
-const port = 3000;
 
-// Middleware untuk mengizinkan server menerima body JSON
-app.use(express.json());
+// --- 2. Konfigurasi CORS ---
+// Tentukan domain frontend mana yang diizinkan untuk mengakses API ini
+const allowedOrigins = ['https://projekan-html.vercel.app'];
 
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Izinkan jika origin ada di dalam daftar, atau jika request tidak memiliki origin (seperti dari Postman)
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Akses ditolak oleh kebijakan CORS'));
+    }
+  }
+};
 
-// --- PERUBAHAN UTAMA DIMULAI DI SINI ---
+// --- 3. Terapkan Middleware ---
+app.use(cors(corsOptions)); // Terapkan konfigurasi CORS
+app.use(express.json());   // Middleware untuk membaca body JSON
 
-// 1. Menyajikan file statis (CSS, JS, gambar) dari folder 'public'
-// Perintah ini membuat semua file di dalam folder 'public' bisa diakses dari browser.
+// --- Rute Anda ---
+// Menyajikan file statis dari folder 'public' (jika ada)
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 2. Mengarahkan halaman utama ('/') ke file index.html
-// Ini menggantikan app.get('/') Anda yang lama.
-// Catatan: express.static di atas sebenarnya sudah melakukan ini secara implisit,
-// tetapi menuliskannya secara eksplisit seperti ini lebih jelas.
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+// Impor dan gunakan rute API komentar Anda
+const commentsRouter = require('./routes/comments');
+app.use('/api/comments', commentsRouter);
+
+// Catch-all untuk frontend (jika Anda menggunakan single-page application)
+app.get('*', (req, res) => {
+    if (!req.originalUrl.startsWith('/')) {
+        res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    }
 });
 
-// --- AKHIR PERUBAHAN UTAMA ---
-
-
-// Impor rute komentar dari file terpisah (ini tetap sama)
-const commentsRouter = require('./routes/comments');
-
-// Gunakan rute tersebut untuk path '/api/comments'
-app.use('/api/komentar', commentsRouter);
-
-
-// Menyalakan server
-// ... your app setup ...
-module.exports = app; // Export the app instance
+// Ekspor aplikasi untuk Vercel (JANGAN GUNAKAN app.listen())
+module.exports = app;
