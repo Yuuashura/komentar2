@@ -1,4 +1,4 @@
-let komentarList = {};
+let komentarList = [];
 
 export default function handler(req, res) {
   // ✅ CORS headers
