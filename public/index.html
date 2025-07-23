@@ -171,7 +171,6 @@
     async function hapusKomentar(id) {
       if (!confirm("Yakin ingin menghapus komentar ini?")) return;
       console.log(`${API_URL}/${id}`);
-      
       try {
         const res = await fetch(`${API_URL}/${id}`,
         { method: "DELETE" });
