@@ -3,7 +3,7 @@ const cors = require('cors'); // <-- 1. Impor library cors
 const path = require('path');
 const app = express();
 
-// --- 2. Konfigurasi CORS yang Andal ---
+// --- 2. Konfigurasi CORS ---
 // Tentukan domain frontend mana yang diizinkan untuk mengakses API ini
 const allowedOrigins = ['https://projekan-html.vercel.app'];
 
@@ -15,9 +15,7 @@ const corsOptions = {
     } else {
       callback(new Error('Akses ditolak oleh kebijakan CORS'));
     }
-  },
-  methods: "GET,POST,DELETE,OPTIONS", // Izinkan metode yang diperlukan
-  allowedHeaders: "Content-Type,Authorization" // Izinkan header yang diperlukan
+  }
 };
 
 // --- 3. Terapkan Middleware ---
@@ -30,24 +28,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Impor dan gunakan rute API komentar Anda
 const commentsRouter = require('./routes/comments');
-app.use('/api/komentar', commentsRouter);
+app.use('/api/comments', commentsRouter);
 
 // Catch-all untuk frontend (jika Anda menggunakan single-page application)
 app.get('*', (req, res) => {
-    // Pastikan ini bukan permintaan API sebelum mengirim index.html
     if (!req.originalUrl.startsWith('/api')) {
-        // Cek apakah file index.html ada
-        const indexPath = path.join(__dirname, 'public', 'index.html');
-        // Kirim file jika ada
-        res.sendFile(indexPath, (err) => {
-            if (err) {
-                // Jika file tidak ada atau ada error lain, kirim pesan sederhana
-                res.status(404).send('Halaman tidak ditemukan.');
-            }
-        });
+        res.sendFile(path.join(__dirname, 'public', 'index.html'));
     }
 });
 
-// --- 4. Ekspor Aplikasi untuk Vercel ---
-// JANGAN PERNAH memanggil app.listen() di sini saat mendeploy ke Vercel.
+// Ekspor aplikasi untuk Vercel (JANGAN GUNAKAN app.listen())
 module.exports = app;
