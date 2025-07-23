@@ -1,9 +1,12 @@
 {
-  "name": "komentar-api",
+  "name": "api-komentar",
   "version": "1.0.0",
-  "main": "api/komentar.js",
+  "description": "API sederhana untuk CRUD komentar",
+  "main": "server.js",
   "scripts": {
-    "start": "node api/komentar.js"
+    "start": "node server.js"
   },
-  "dependencies": {}
+  "dependencies": {
+    "express": "^4.19.2"
+  }
 }
