@@ -15,7 +15,8 @@ const corsOptions = {
     } else {
       callback(new Error('Akses ditolak oleh kebijakan CORS'));
     }
-  }
+  },
+  methods: "GET, POST, DELETE, OPTIONS"
 };
 
 // --- 3. Terapkan Middleware ---
